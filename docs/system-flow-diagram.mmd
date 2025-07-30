@@ -1,0 +1,66 @@
+sequenceDiagram
+    participant U as User/Applicant
+    participant CB as Chatbot Interface
+    participant AI as AI Engine
+    participant AUTH as Authentication
+    participant DB as Database
+    participant EMAIL as Email System
+    participant STAFF as Staff Dashboard
+    
+    Note over U, STAFF: Scenario 1: Status Inquiry via Chatbot
+    
+    U->>CB: "Check my application status"
+    CB->>AUTH: Request authentication
+    AUTH->>U: "Please provide App ID or Name+DOB"
+    U->>AUTH: Provides credentials
+    AUTH->>DB: Validate user credentials
+    DB-->>AUTH: User validated
+    AUTH-->>CB: Authentication successful
+    
+    CB->>AI: Process status inquiry
+    AI->>DB: Query application data
+    DB-->>AI: Return application details
+    AI->>AI: Generate contextual response
+    AI-->>CB: Formatted response with status
+    CB-->>U: "Your work permit is under review. Missing documents: Employment contract, Language certificate."
+    
+    U->>CB: "When is the deadline?"
+    CB->>AI: Process follow-up question
+    AI->>DB: Get deadline information
+    DB-->>AI: Deadline data
+    AI-->>CB: "Deadline is April 15th"
+    CB-->>U: Provides deadline with submission instructions
+    
+    Note over U, STAFF: Scenario 2: Automated Email Notification
+    
+    DB->>EMAIL: Application status changed
+    EMAIL->>DB: Get applicant details
+    DB-->>EMAIL: Applicant information
+    EMAIL->>EMAIL: Generate personalized email
+    EMAIL->>U: Send status update email
+    
+    Note over U, STAFF: Scenario 3: Complex Case Escalation
+    
+    U->>CB: "Emergency visa needed urgently"
+    CB->>AI: Analyze inquiry complexity
+    AI->>AI: Detect escalation keywords
+    AI->>STAFF: Create escalation ticket
+    AI-->>CB: "I've escalated your case to our emergency team"
+    CB-->>U: Provides escalation confirmation + ticket number
+    STAFF->>U: Human agent contact within 2 hours
+    
+    Note over U, STAFF: Scenario 4: Document Requirements
+    
+    U->>CB: "What documents do I need?"
+    CB->>AUTH: Verify user session
+    AUTH-->>CB: Session valid
+    CB->>AI: Process document inquiry
+    AI->>DB: Get visa type and requirements
+    DB-->>AI: Document checklist for visa type
+    AI->>AI: Personalize based on application stage
+    AI-->>CB: Complete document list with status
+    CB-->>U: "You need: 1. Employment contract (missing), 2. Language cert (missing), 3. Passport (received)"
+    
+    U->>CB: "Send me the templates"
+    CB->>EMAIL: Generate document templates
+    EMAIL->>U: Email with downloadable templates

@@ -1,0 +1,97 @@
+
+graph TB
+    %% Actors
+    A[Applicant] 
+    S[Foreign Office Staff]
+    SA[System Administrator]
+    ES[External Systems]
+    
+    %% System Boundary
+    subgraph "Communication Automation System"
+        %% Core Use Cases
+        UC1[Check Application Status]
+        UC2[Inquire Document Requirements]
+        UC3[Get Processing Timeline]
+        UC4[Schedule Appointment]
+        UC5[Request Urgent Processing]
+        UC6[Get Language Support]
+        UC7[Receive Status Updates]
+        UC8[Generate Email Templates]
+        UC9[Escalate Complex Cases]
+        UC10[Monitor System Performance]
+        UC11[Update Application Data]
+        UC12[Manage User Sessions]
+        UC13[Authenticate User]
+        UC14[Process Natural Language]
+        UC15[Generate Reports]
+        
+        %% System Components
+        CB[Chatbot Interface]
+        EA[Email Automation]
+        DB[(Application Database)]
+        AI[AI Response Engine]
+        AUTH[Authentication System]
+    end
+    
+    %% Actor-Use Case Relationships
+    A --> UC1
+    A --> UC2
+    A --> UC3
+    A --> UC4
+    A --> UC5
+    A --> UC6
+    A --> UC7
+    A --> UC13
+    
+    S --> UC9
+    S --> UC11
+    S --> UC15
+    
+    SA --> UC10
+    SA --> UC12
+    SA --> UC15
+    
+    %% System Internal Relationships
+    UC1 --> CB
+    UC2 --> CB
+    UC3 --> CB
+    UC4 --> CB
+    UC5 --> CB
+    UC6 --> CB
+    
+    UC7 --> EA
+    UC8 --> EA
+    
+    UC13 --> AUTH
+    UC14 --> AI
+    
+    CB --> DB
+    EA --> DB
+    AUTH --> DB
+    AI --> DB
+    
+    %% External System Integration
+    ES --> UC11
+    UC9 --> ES
+    
+    %% Include/Extend Relationships
+    UC1 -.->|includes| UC13
+    UC2 -.->|includes| UC13
+    UC3 -.->|includes| UC13
+    UC4 -.->|includes| UC13
+    UC5 -.->|includes| UC13
+    
+    UC1 -.->|extends| UC9
+    UC2 -.->|extends| UC9
+    UC3 -.->|extends| UC9
+    
+    UC7 -.->|includes| UC8
+    
+    %% Styling
+    classDef actor fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef usecase fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
+    classDef system fill:#e8f5e8,stroke:#2e7d32,stroke-width:2px
+    
+    class A,S,SA,ES actor
+    class UC1,UC2,UC3,UC4,UC5,UC6,UC7,UC8,UC9,UC10,UC11,UC12,UC13,UC14,UC15 usecase
+    class CB,EA,DB,AI,AUTH system
