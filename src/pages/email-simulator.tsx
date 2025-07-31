@@ -51,8 +51,8 @@ Your ${visaType.toLowerCase()} application (ID: ${
 
 **Required Documents:**
 ${app.requiredDocuments
-  .filter((doc) => doc.status === "missing")
-  .map((doc) => `• ${doc.name} (Deadline: ${doc.deadline})`)
+  .filter((doc) => doc?.status === "missing")
+  .map((doc) => `• ${doc?.name} (Deadline: ${doc?.deadline})`)
   .join("\n")}
 
 **Important Notes:**
@@ -62,8 +62,8 @@ ${app.requiredDocuments
 
 **Already Received:**
 ${app.requiredDocuments
-  .filter((doc) => doc.status === "received")
-  .map((doc) => `✓ ${doc.name}`)
+  .filter((doc) => doc?.status === "received")
+  .map((doc) => `✓ ${doc?.name}`)
   .join("\n")}
 
 For document templates and submission guidelines, visit: www.germany.diplo.de/visa-documents
@@ -120,7 +120,7 @@ German Foreign Office`;
 
   const generateDocumentRequestEmail = (app: Application): string => {
     const missingDocs = app.requiredDocuments.filter(
-      (doc) => doc.status === "missing"
+      (doc) => doc?.status === "missing"
     );
 
     return `Subject: URGENT - Missing Documents for Application ${app.id}
@@ -136,9 +136,9 @@ We have identified missing documents in your ${app.visaType.replace(
 ${missingDocs
   .map(
     (doc, index) =>
-      `${index + 1}. ${doc.name}
-   - Deadline: ${doc.deadline}
-   - Template: ${doc.template || "Available at our website"}`
+      `${index + 1}. ${doc?.name}
+   - Deadline: ${doc?.deadline}
+   - Template: ${doc?.template || "Available at our website"}`
   )
   .join("\n\n")}
 
@@ -286,7 +286,7 @@ Visa Decision Department`;
 
   const generateReminderEmail = (app: Application): string => {
     const missingDocs = app.requiredDocuments.filter(
-      (doc) => doc.status === "missing"
+      (doc) => doc?.status === "missing"
     );
 
     return `Subject: REMINDER - Document Deadline Approaching - Application ${
@@ -302,7 +302,7 @@ This is a friendly reminder that the deadline for submitting required documents 
 
 **URGENT - Missing Documents:**
 ${missingDocs
-  .map((doc) => `• ${doc.name} - Deadline: ${doc.deadline}`)
+  .map((doc) => `• ${doc?.name} - Deadline: ${doc?.deadline}`)
   .join("\n")}
 
 **Days Remaining:** 3 days until deadline

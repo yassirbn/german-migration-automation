@@ -1,9 +1,8 @@
 import React from 'react';
 import Layout from '../components/layout/Layout';
 import { mockApplications } from '../data/mockApplications';
-import { User, FileText, Clock, CheckCircle, AlertCircle, TrendingUp, Users, FileCheck } from 'lucide-react';
-
-const ApplicationCard = ({ app }) => (
+import {LucideIcon, User, FileText, Clock, CheckCircle, AlertCircle, TrendingUp, Users, FileCheck } from 'lucide-react';
+const ApplicationCard = ({ app }: { app: any }) => (
   <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-6">
     <div className="flex items-start justify-between mb-4">
       <div>
@@ -38,14 +37,14 @@ const ApplicationCard = ({ app }) => (
       <div className="mt-4 pt-4 border-t border-gray-200">
         <p className="text-xs font-medium text-gray-700 mb-2">Documents Status:</p>
         <div className="space-y-1">
-          {app.requiredDocuments.slice(0, 2).map((doc, index) => (
+          {app.requiredDocuments.slice(0, 2).map(({doc, index} :{doc : any , index : any}) => (
             <div key={index} className="flex items-center text-xs">
-              {doc.status === 'received' ? 
+              {doc?.status === 'received' ? 
                 <CheckCircle className="w-3 h-3 text-green-500 mr-1" /> :
                 <AlertCircle className="w-3 h-3 text-red-500 mr-1" />
               }
-              <span className={doc.status === 'received' ? 'text-green-700' : 'text-red-700'}>
-                {doc.name.substring(0, 25)}...
+              <span className={doc?.status === 'received' ? 'text-green-700' : 'text-red-700'}>
+                {doc?.name.substring(0, 25)}...
               </span>
             </div>
           ))}
@@ -58,7 +57,7 @@ const ApplicationCard = ({ app }) => (
   </div>
 );
 
-const StatsCard = ({ title, value, subtitle, icon: Icon, color = "blue" }) => (
+const StatsCard = ({ title, value, subtitle, Icon, color = "blue" } : { title :string , value:string | number, subtitle : string, Icon: LucideIcon, color:string }) => (
   <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
     <div className="flex items-center justify-between">
       <div>
@@ -93,28 +92,28 @@ export default function Dashboard() {
             title="Total Applications"
             value={totalApplications}
             subtitle="Active cases"
-            icon={FileText}
+            Icon={FileText}
             color="blue"
           />
           <StatsCard
             title="Approved Today"
             value={approvedCount}
             subtitle="Completed processing"
-            icon={CheckCircle}
+            Icon={CheckCircle}
             color="green"
           />
           <StatsCard
             title="Pending Review"
             value={pendingCount}
             subtitle="In processing queue"
-            icon={Clock}
+            Icon={Clock}
             color="yellow"
           />
           <StatsCard
             title="Automation Rate"
             value={automationRate}
             subtitle="Inquiries handled by AI"
-            icon={TrendingUp}
+            Icon={TrendingUp}
             color="purple"
           />
         </div>

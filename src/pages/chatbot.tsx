@@ -89,10 +89,10 @@ const ChatbotPage = () => {
       switch (status) {
         case "documents_required":
           const missingDocs = currentUser.requiredDocuments.filter(
-            (doc) => doc.status === "missing"
+            (doc) => doc?.status === "missing"
           );
           return `Your ${visaType} application is currently waiting for additional documents. You need to submit:\n\n${missingDocs
-            .map((doc) => `• ${doc.name}`)
+            .map((doc) => `• ${doc?.name}`)
             .join("\n")}\n\nDeadline: ${
             missingDocs[0]?.deadline || "As soon as possible"
           }\n\nWould you like me to send you the document templates?`;
@@ -115,10 +115,10 @@ const ChatbotPage = () => {
       cleanInput.includes("need")
     ) {
       const missingDocs = currentUser.requiredDocuments.filter(
-        (doc) => doc.status === "missing"
+        (doc) => doc?.status === "missing"
       );
       const receivedDocs = currentUser.requiredDocuments.filter(
-        (doc) => doc.status === "received"
+        (doc) => doc?.status === "received"
       );
 
       if (missingDocs.length === 0) {
@@ -126,14 +126,14 @@ const ChatbotPage = () => {
           "_",
           " "
         )} application:\n\n${receivedDocs
-          .map((doc) => `✓ ${doc.name}`)
+          .map((doc) => `✓ ${doc?.name}`)
           .join("\n")}`;
       }
 
       return `Here's your document status:\n\n**Still needed:**\n${missingDocs
-        .map((doc) => `• ${doc.name} (deadline: ${doc.deadline})`)
+        .map((doc) => `• ${doc?.name} (deadline: ${doc?.deadline})`)
         .join("\n")}\n\n**Already received:**\n${receivedDocs
-        .map((doc) => `✓ ${doc.name}`)
+        .map((doc) => `✓ ${doc?.name}`)
         .join(
           "\n"
         )}\n\nWould you like me to email you the templates for missing documents?`;
