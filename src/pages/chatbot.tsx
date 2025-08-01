@@ -20,15 +20,36 @@ const ChatbotPage = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [currentUser, setCurrentUser] = useState<Application | null>(null);
   const [isTyping, setIsTyping] = useState(false);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (messagesContainerRef.current) {
+      const container = messagesContainerRef.current;
+      container.scrollTop = container.scrollHeight;
+    }
+  };
+
+  const smoothScrollToBottom = () => {
+    if (messagesContainerRef.current) {
+      const container = messagesContainerRef.current;
+      container.scrollTo({
+        top: container.scrollHeight,
+        behavior: 'smooth'
+      });
+    }
   };
 
   useEffect(() => {
-    scrollToBottom();
+    // Use smooth scroll for new messages
+    smoothScrollToBottom();
   }, [messages]);
+
+  useEffect(() => {
+    // Immediate scroll when typing indicator appears/disappears
+    if (isTyping) {
+      smoothScrollToBottom();
+    }
+  }, [isTyping]);
 
   const authenticateUser = (input: string): string => {
     const cleanInput = input.toLowerCase().trim();
@@ -240,7 +261,10 @@ const ChatbotPage = () => {
                 )}
               </div>
 
-              <div className="flex-1 overflow-y-auto p-4 space-y-4">
+              <div 
+                ref={messagesContainerRef}
+                className="flex-1 overflow-y-auto p-4 space-y-4 scroll-smooth"
+              >
                 {messages.map((message, index) => (
                   <div
                     key={index}
@@ -277,7 +301,6 @@ const ChatbotPage = () => {
                     </div>
                   </div>
                 )}
-                <div ref={messagesEndRef} />
               </div>
 
               <div className="p-4 border-t border-gray-200">
