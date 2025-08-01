@@ -42,7 +42,7 @@ german-migration-automation/
 ### Installation
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/german-migration-automation.git
+git clone https://github.com/yassirbn/german-migration-automation.git
 
 # Navigate to project directory
 cd german-migration-automation
@@ -233,7 +233,6 @@ For questions about this prototype:
 - 📖 **Documentation**: Refer to files in the `docs/` folder
 - 🐛 **Issues**: Report bugs via GitHub Issues
 - 💡 **Feature Requests**: Submit enhancement ideas via GitHub Discussions
-- 📧 **Contact**: [your-email@example.com](mailto:your-email@example.com)
 
 ---
 
